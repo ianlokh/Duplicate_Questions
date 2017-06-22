@@ -374,13 +374,13 @@ df_all = utils.to_32bit(df_all)
 
 ##############################################################################
 # Get pre-generated wordnet gen_semantic_similarity and gen_word_order_similarity 
-# scores and append to the csv file
+# scores and append to the dataframe
 ##############################################################################
 
 df_temp = pd.DataFrame()
 
 # open training h5 file
-tr_store = pd.HDFStore('df_all_train.0430.h5', mode='r')
+tr_store = pd.HDFStore('df_all_train.wordnet.h5', mode='r')
 nrows = tr_store.get_storer('df').nrows
 
 for i in range(nrows//gs.chunksize + 1):
@@ -395,7 +395,7 @@ for i in range(nrows//gs.chunksize + 1):
 tr_store.close()
 
 
-# join the *_similarity scores with the original dataframe before persisting it
+# join the *_similarity scores with the original dataframe
 df_all = pd.merge(left=df_all, right=df_temp, how='left', left_on=['id', 'type'], right_on=['id', 'type'])
 
 
@@ -409,7 +409,7 @@ gc.collect()
 
 
 
-# Feature Generation
+# Additional Feature Generation
 ##############################################################################
 
 ##############################################################################
@@ -552,6 +552,8 @@ for chunk in tfrdr: #for each 100k rows
     
 ##############################################################################
 # Using Wordnet to determine similarity scores for feature creation
+# - this is commented out here because this section of code was executed separately
+# to create the df_all_train.wordnet.h5 file.
 ##############################################################################
 
 #==============================================================================
