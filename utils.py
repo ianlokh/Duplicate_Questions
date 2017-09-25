@@ -80,12 +80,17 @@ def lemm_question(row, column):
 
 
 def remove_stopwords(row, column):
-    wordset = {}
-    for word in tokenizer(row[column]):
+    sent = ''
+    for word in word_tokenize(row[column]):
         if word not in wnu.stpwrd:
-            wordset[word] = 1
-    sent = ' '.join(word for word in wordset.keys())
+            sent += ' ' + word
     return sent
+#    wordset = {}
+#    for word in word_tokenize(row[column]):
+#        if word not in wnu.stpwrd:
+#            wordset[word] = 1
+#    sent = ' '.join(word for word in wordset.keys())
+#    return sent
 
 
 
